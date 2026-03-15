@@ -1,0 +1,13 @@
+[2026-03-16 00:17:17.985] [INFO ]   Outliers detected: 4 (3.88%) using consensus of 2 methods
+[2026-03-16 00:17:18.012] [INFO ]   Outliers treated via winsorization (1st/99th percentile).
+[2026-03-16 00:17:18.049] [INFO ] Performing feature selection: pca
+[2026-03-16 00:17:21.896] [INFO ]   Training: Linear
+[2026-03-16 00:17:23.177] [INFO ]   Training: Ridge
+[2026-03-16 00:17:23.629] [INFO ]   Training: Tree
+[2026-03-16 00:18:01.939] [INFO ]   Outliers detected: 4 (3.88%) using consensus of 2 methods
+[2026-03-16 00:18:01.978] [INFO ]   Outliers treated via winsorization (1st/99th percentile).
+[2026-03-16 00:18:02.012] [INFO ] Performing feature selection: pca
+[2026-03-16 00:18:05.808] [INFO ]   Training: Linear
+[2026-03-16 00:18:07.104] [INFO ]   Training: Ridge
+[2026-03-16 00:18:07.588] [INFO ]   Training: Tree
+[2026-03-16 00:18:07.864] [INFO ]   Added 66 engineered features (69 total)

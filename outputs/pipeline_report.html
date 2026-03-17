@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pipeline Report</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.6;color:#333;background:#f4f6f8}
+    .container{max-width:1100px;margin:0 auto;padding:30px 20px}
+    h1{color:#1a1a2e;margin-bottom:6px;font-size:1.9rem}
+    .subtitle{color:#666;margin-bottom:30px;font-size:.9rem}
+    h2{color:#16213e;margin:36px 0 16px;padding-bottom:8px;border-bottom:2px solid #dee2e6;font-size:1.2rem}
+    .card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin:20px 0}
+    .card{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;padding:22px;border-radius:10px;text-align:center}
+    .card-value{font-size:2rem;font-weight:700;margin:6px 0}
+    .card-label{font-size:.8rem;opacity:.85;text-transform:uppercase;letter-spacing:.05em}
+    .card-sub{font-size:.78rem;opacity:.7;margin-top:4px}
+    .panel{background:#fff;border-radius:8px;padding:20px;margin:16px 0;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+    table{width:100%;border-collapse:collapse;font-size:.88rem}
+    th{background:#1a1a2e;color:#fff;padding:10px 14px;text-align:left;font-weight:600}
+    td{padding:10px 14px;border-bottom:1px solid #eee}
+    tr:last-child td{border-bottom:none}
+    tr:hover{background:#f8f9fa}
+    .best{background:#d4edda!important}
+    .badge{display:inline-block;padding:3px 8px;border-radius:4px;font-size:.78rem;font-weight:600}
+    .badge-ok{background:#28a745;color:#fff}
+    .badge-warn{background:#ffc107;color:#333}
+    .footer{margin-top:48px;padding-top:20px;border-top:1px solid #dee2e6;color:#888;font-size:.82rem;text-align:center}
+    @media(max-width:600px){.card-grid{grid-template-columns:1fr 1fr}}
+  </style>
+</head>
+<body>
+<div class="container">
+<h1>Data Preprocessing Pipeline Report</h1>
+<p class="subtitle">Generated: 17-Mar-2026 12:49:52</p>
+<div class="card-grid">
+  <div class="card">
+    <div class="card-label">Dataset</div>
+    <div class="card-value">Air Quality (Synthetic)</div>
+    <div class="card-sub">9358 samples</div>
+  </div>
+  <div class="card">
+    <div class="card-label">Best Model</div>
+    <div class="card-value">Lasso</div>
+    <div class="card-sub">RMSE 8.2628</div>
+  </div>
+  <div class="card">
+    <div class="card-label">Feature Count</div>
+    <div class="card-value">12 &rarr; 6</div>
+    <div class="card-sub">features selected</div>
+  </div>
+  <div class="card">
+    <div class="card-label">Missing Data</div>
+    <div class="card-value">0.0</div>
+<h2>1. Dataset Overview</h2>
+<div class="panel">
+<table>
+  <tr><th>Metric</th><th>Value</th></tr>
+  <tr><td>Dataset</td><td>Air Quality (Synthetic)</td></tr>
+  <tr><td>Samples</td><td>9358</td></tr>
+  <tr><td>Original Features</td><td>12</td></tr>
+  <tr><td>Missing Values</td><td>0 (0.00</table>
+</div>
+<h2>2. Missing Value Treatment</h2>
+<div class="panel">
+<p style="margin-bottom:12px">Best method: <span class="badge badge-ok">none</span> &nbsp; Evaluation RMSE: 0.0000</p>
+<table>
+  <tr><th>Method</th><th>RMSE</th><th>Rank</th></tr>
+</table>
+</div>
+<h2>3. Outlier Detection</h2>
+<div class="panel">
+<p style="margin-bottom:12px">Consensus outliers: <span class="badge badge-warn">848 (9.06%)</span></p>
+<table>
+  <tr><th>Method</th><th>Outliers</th><th>%</th></tr>
+  <tr><td>Z-Score</td><td>356</td><td>3.80</td></tr>
+  <tr><td>Modified Z-Score</td><td>4650</td><td>49.69</td></tr>
+  <tr><td>IQR</td><td>828</td><td>8.85</td></tr>
+  <tr><td>Distance-based</td><td>234</td><td>2.50</td></tr>
+  <tr><td>LOF</td><td>100</td><td>1.07</td></tr>
+</table>
+</div>
+<h2>4. Feature Selection</h2>
+<div class="panel">
+<table>
+  <tr><td>Method</td><td>PCA</td></tr>
+  <tr><td>Original Features</td><td>272</td></tr>
+  <tr><td>Selected Features</td><td>6</td></tr>
+  <tr><td>Dimensionality Reduction</td><td>97.8</table>
+</div>
+<h2>5. Machine Learning Results</h2>
+<div class="panel">
+<table>
+  <tr><th>Model</th><th>RMSE</th><th>R&sup2;</th><th>MAE</th><th>Time (s)</th></tr>
+  <tr class="best"><td>Lasso *</td><td>8.2628</td><td>-0.0003</td><td>6.9350</td><td>0.027</td></tr>
+  <tr><td>Linear</td><td>8.2629</td><td>-0.0003</td><td>6.9351</td><td>0.464</td></tr>
+  <tr><td>Ridge</td><td>8.2630</td><td>-0.0004</td><td>6.9349</td><td>0.218</td></tr>
+  <tr><td>Tree</td><td>8.3554</td><td>-0.0229</td><td>6.9701</td><td>0.105</td></tr>
+  <tr><td>SVM</td><td>8.4476</td><td>-0.0456</td><td>7.0253</td><td>0.982</td></tr>
+  <tr><td>RandomForest</td><td>8.4512</td><td>-0.0465</td><td>6.9292</td><td>1.208</td></tr>
+  <tr><td>Ensemble</td><td>9.0636</td><td>-0.2036</td><td>7.2570</td><td>0.523</td></tr>
+</table>
+<p style="font-size:.8rem;color:#666;margin-top:8px">* Best model</p>
+</div>
+<h2>6. Pipeline Configuration</h2>
+<div class="panel">
+<table>
+  <tr><td>Train / Test Split</td><td>80  <tr><td>Random Seed</td><td>42</td></tr>
+  <tr><td>Cross-Validation Folds</td><td>5</td></tr>
+  <tr><td>Hyperparameter Tuning</td><td>true</td></tr>
+  <tr><td>Feature Selection Method</td><td>pca</td></tr>
+</table>
+</div>
+<div class="footer">
+  <p>MATLAB Data Preprocessing Toolkit &mdash; outputs saved to <code>outputs/</code></p>
+  <p>Log file: <code>logs/pipeline.log</code></p>
+</div>
+</div>
+</body>
+</html>

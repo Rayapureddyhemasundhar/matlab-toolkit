@@ -75,6 +75,7 @@ function [X_selected, selected_features, info] = pca_selection(X, cfg)
     selected_features = 1:n_components;
 
     info.method      = 'PCA';
+    info.n_original  = size(X, 2);
     info.explained_variance = explained;
     info.cumulative  = cumulative;
     info.n_components = n_components;
@@ -139,6 +140,7 @@ function [X_selected, selected_features, info] = correlation_selection(X, y, cfg
     selected_features = find(keep);
 
     info.method            = 'Correlation';
+    info.n_original        = size(X, 2);
     info.kept              = keep;
     info.removed           = ~keep;
     info.correlation_matrix = corr_matrix;
@@ -160,6 +162,7 @@ function [X_selected, selected_features, info] = variance_selection(X, cfg)
     selected_features = find(keep);
 
     info.method    = 'Variance';
+    info.n_original = size(X, 2);
     info.variances = variances;
     info.threshold = threshold;
     info.kept      = keep;
@@ -200,6 +203,7 @@ function [X_selected, selected_features, info] = mutual_info_selection(X, y, cfg
     selected_features = keep;
 
     info.method        = 'Mutual Information';
+    info.n_original    = size(X, 2);
     info.scores        = mi_scores;
     info.sorted_scores = sorted_scores;
     info.keep_idx      = keep;
@@ -234,6 +238,7 @@ function [X_selected, selected_features, info] = rfe_selection(X, y, cfg)
     selected_features = find(in);
 
     info.method     = 'RFE';
+    info.n_original = size(X, 2);
     info.In         = in;
     info.history    = history;
     info.n_selected = sum(in);

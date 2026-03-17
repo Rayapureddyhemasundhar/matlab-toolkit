@@ -98,7 +98,11 @@ function [X_selected, selected_features, info] = pca_selection(X, cfg)
         title('Cumulative Explained Variance');
         legend('Cumulative', sprintf('%d%% Threshold', cfg.pca_variance_threshold));
 
-        saveas(fig, 'figures/pca_analysis.png');
+        fig_dir = fullfile(pwd, 'figures');
+        if ~exist(fig_dir, 'dir')
+            mkdir(fig_dir);
+        end
+        saveas(fig, fullfile(fig_dir, 'pca_analysis.png'));
         close(fig);
     end
 
@@ -248,10 +252,13 @@ function mi = mutual_info(x, y, n_bins)
     x = x(valid);
     y = y(valid);
 
-    if isempty(x) || length(x) < 10
+    if isempty(x) || numel(x) < 10
         mi = 0;
         return;
     end
+
+    % Limit number of bins based on unique values to avoid empty bins
+    n_bins = min(n_bins, max(2, numel(unique(x))));
 
     [~, x_edges] = histcounts(x, n_bins);
     [~, y_edges] = histcounts(y, n_bins);

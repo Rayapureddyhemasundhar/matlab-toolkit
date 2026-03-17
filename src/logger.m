@@ -37,6 +37,10 @@ function varargout = logger(message, level, varargin)
                 mkdir('logs');
             end
             log_file = fopen(cfg.log_file, 'a');
+            if log_file == -1
+                warning('Unable to open log file for writing: %s. Logging to file disabled.', cfg.log_file);
+                cfg.log_to_file = false;
+            end
         end
 
         initialized = true;
@@ -47,8 +51,15 @@ function varargout = logger(message, level, varargin)
     end
 
     % Filter by log level
-    current_level_idx = find(strcmp(log_levels, cfg.log_level));
-    msg_level_idx     = find(strcmp(log_levels, level));
+    current_level_idx = find(strcmp(log_levels, cfg.log_level), 1);
+    if isempty(current_level_idx)
+        current_level_idx = find(strcmp(log_levels, 'INFO'), 1);
+    end
+
+    msg_level_idx     = find(strcmp(log_levels, level), 1);
+    if isempty(msg_level_idx)
+        msg_level_idx = current_level_idx;
+    end
 
     if msg_level_idx < current_level_idx
         if nargout > 0
@@ -78,6 +89,7 @@ function varargout = logger(message, level, varargin)
     % File output
     if cfg.log_to_file && ~isempty(log_file) && log_file ~= -1
         fprintf(log_file, '%s', log_entry);
+        % MATLAB flushes file I/O automatically; fflush is not a built-in function.
     end
 
     if nargout > 0

@@ -85,8 +85,16 @@ function [X_clean, results] = detect_outliers_comprehensive(X, cfg)
 
         if any(outliers_col)
             inlier_data = col_data(~results.consensus);
+            if isempty(inlier_data) || all(isnan(inlier_data))
+                continue;
+            end
+
             lower       = prctile(inlier_data, 1);
             upper       = prctile(inlier_data, 99);
+            if isnan(lower) || isnan(upper)
+                continue;
+            end
+
             X_clean(outliers_col, col) = max(min(col_data(outliers_col), upper), lower);
         end
     end
@@ -102,20 +110,33 @@ function outliers = detect_lof_outliers(X, k)
     n        = size(X, 1);
     outliers = false(n, 1);
 
-    if n < k * 2 || n > 5000
+    % Avoid expensive LOF computations on tiny or huge datasets.
+    if n < max(10, k * 2)
         return;
     end
 
-    k_distances = zeros(n, 1);
-    for i = 1:n
-        distances        = sqrt(sum((X - X(i,:)).^2, 2));
-        sorted_dist      = sort(distances);
-        k_distances(i)   = sorted_dist(min(k+1, end));
+    max_samples = 2000;
+    if n > max_samples
+        rng(0); % deterministic subsampling
+        subset_idx = randperm(n, max_samples);
+        Xsub       = X(subset_idx, :);
+    else
+        subset_idx = 1:n;
+        Xsub       = X;
     end
 
-    lof_scores = zeros(n, 1);
-    for i = 1:n
-        distances  = sqrt(sum((X - X(i,:)).^2, 2));
+    % Compute LOF on the chosen subset for performance
+    n_sub       = size(Xsub, 1);
+    k_distances = zeros(n_sub, 1);
+    for i = 1:n_sub
+        distances      = sqrt(sum((Xsub - Xsub(i,:)).^2, 2));
+        sorted_dist    = sort(distances);
+        k_distances(i) = sorted_dist(min(k+1, end));
+    end
+
+    lof_scores = zeros(n_sub, 1);
+    for i = 1:n_sub
+        distances  = sqrt(sum((Xsub - Xsub(i,:)).^2, 2));
         [~, idx]   = sort(distances);
         neighbors  = idx(2:min(k+1, end));
 
@@ -124,18 +145,18 @@ function outliers = detect_lof_outliers(X, k)
 
         lrd_nb = zeros(length(neighbors), 1);
         for j = 1:length(neighbors)
-            nb         = neighbors(j);
-            d_nb       = sqrt(sum((X - X(nb,:)).^2, 2));
+            nb          = neighbors(j);
+            d_nb        = sqrt(sum((Xsub - Xsub(nb,:)).^2, 2));
             [~, nb_idx] = sort(d_nb);
-            nb_nb      = nb_idx(2:min(k+1, end));
-            rd_nb      = max(k_distances(nb_nb), d_nb(nb_nb));
-            lrd_nb(j)  = 1 / (mean(rd_nb) + eps);
+            nb_nb       = nb_idx(2:min(k+1, end));
+            rd_nb       = max(k_distances(nb_nb), d_nb(nb_nb));
+            lrd_nb(j)   = 1 / (mean(rd_nb) + eps);
         end
 
         lof_scores(i) = mean(lrd_nb) / (lrd_i + eps);
     end
 
     threshold = prctile(lof_scores, 95);
-    outliers  = lof_scores > threshold;
+    outliers(subset_idx) = lof_scores > threshold;
 
 end

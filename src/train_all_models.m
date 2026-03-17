@@ -8,6 +8,7 @@ function results = train_all_models(X_train, y_train, X_test, y_test, cfg)
 
     results             = struct();
     results.models      = {};
+    results.model_objects = {};
     results.rmse        = [];
     results.rsquared    = [];
     results.mae         = [];
@@ -22,13 +23,25 @@ function results = train_all_models(X_train, y_train, X_test, y_test, cfg)
         try
             [model, y_pred] = fit_model(model_name, X_train, y_train, X_test);
 
+            if iscell(y_pred)
+                y_pred = str2double(y_pred);
+            end
+            if ~isnumeric(y_pred)
+                y_pred = double(y_pred);
+            end
+
             rmse = sqrt(mean((y_test - y_pred).^2));
             mae  = mean(abs(y_test - y_pred));
             ss_res = sum((y_test - y_pred).^2);
             ss_tot = sum((y_test - mean(y_test)).^2);
-            r2   = 1 - ss_res / (ss_tot + eps);
+            if ss_tot < eps
+                r2 = NaN;
+            else
+                r2 = 1 - ss_res / ss_tot;
+            end
 
             results.models{end+1}      = model_name;
+            results.model_objects{end+1} = model;
             results.rmse(end+1)        = rmse;
             results.mae(end+1)         = mae;
             results.rsquared(end+1)    = r2;
@@ -40,6 +53,7 @@ function results = train_all_models(X_train, y_train, X_test, y_test, cfg)
         catch ME
             logger(sprintf('    Failed: %s', ME.message), 'WARN');
             results.models{end+1}      = model_name;
+            results.model_objects{end+1} = [];
             results.rmse(end+1)        = inf;
             results.mae(end+1)         = inf;
             results.rsquared(end+1)    = -inf;
@@ -51,6 +65,7 @@ function results = train_all_models(X_train, y_train, X_test, y_test, cfg)
     % Sort by ascending RMSE
     [results.rmse, idx]    = sort(results.rmse);
     results.models         = results.models(idx);
+    results.model_objects  = results.model_objects(idx);
     results.mae            = results.mae(idx);
     results.rsquared       = results.rsquared(idx);
     results.time           = results.time(idx);

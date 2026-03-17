@@ -36,6 +36,11 @@ function [X, y, feature_names, dataset_info] = load_real_dataset(dataset_name, d
             [X, y, feature_names, dataset_info] = generate_synthetic_data();
     end
 
+    % Ensure feature names exist
+    if isempty(feature_names)
+        feature_names = arrayfun(@(i) sprintf('Feature_%d', i), 1:size(X, 2), 'UniformOutput', false);
+    end
+
     fprintf('\n');
     fprintf('DATASET INFORMATION\n');
     fprintf('%s\n', repmat('-', 1, 50));
@@ -57,6 +62,15 @@ function [X, y, feature_names, info] = load_air_quality(data_path)
     if ~exist(data_path, 'file')
         logger('Air Quality dataset not found, attempting download...', 'INFO');
         download_air_quality_dataset();
+
+        % If the configured path is still missing, try to locate any CSV in the data folder
+        if ~exist(data_path, 'file')
+            csvs = dir(fullfile('data', '*.csv'));
+            if ~isempty(csvs)
+                data_path = fullfile('data', csvs(1).name);
+                logger(sprintf('Using detected dataset file: %s', data_path), 'INFO');
+            end
+        end
     end
 
     if exist(data_path, 'file')
@@ -111,8 +125,18 @@ function download_air_quality_dataset()
     url      = 'https://archive.ics.uci.edu/ml/machine-learning-databases/00360/AirQualityUCI.zip';
     zip_file = 'data/air_quality.zip';
     try
-        websave(zip_file, url);
+        opts = weboptions('Timeout', 30);
+        websave(zip_file, url, opts);
         unzip(zip_file, 'data');
+
+        % Standardize filename so future calls can find it easily
+        if ~exist(data_path, 'file')
+            csvs = dir(fullfile('data', '*.csv'));
+            if ~isempty(csvs)
+                movefile(fullfile('data', csvs(1).name), data_path);
+            end
+        end
+
         logger('Air Quality dataset downloaded successfully', 'INFO');
     catch ME
         logger(sprintf('Download failed: %s', ME.message), 'WARN');

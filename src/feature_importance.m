@@ -32,6 +32,8 @@ function [fig, top_features] = plot_feature_importance(model, model_name, featur
         elseif contains(model_name, 'Linear') || contains(model_name, 'Ridge') || contains(model_name, 'Lasso')
             if isa(model, 'LinearModel')
                 importance = abs(model.Coefficients.Estimate(2:end));
+            elseif isstruct(model) && isfield(model, 'B')
+                importance = abs(model.B);
             else
                 importance = abs(model.Beta);
             end

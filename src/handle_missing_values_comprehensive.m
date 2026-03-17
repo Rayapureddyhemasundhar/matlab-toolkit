@@ -62,7 +62,8 @@ function X_filled = apply_imputation(X, method, k)
     % Dispatch to the appropriate imputation routine.
     switch method
         case {'linear', 'spline', 'pchip', 'previous', 'next', 'nearest'}
-            X_filled = fillmissing(X, method);
+            % Use nearest fill for end values to avoid leaving NaNs at boundaries
+            X_filled = fillmissing(X, method, 'EndValues', 'nearest');
         case 'mean'
             X_filled = fillmissing_by_mean(X);
         case 'median'
@@ -96,6 +97,10 @@ end
 
 
 function X_filled = fillmissing_by_knn(X, k)
+    if nargin < 2 || isempty(k) || k < 1
+        k = 5;
+    end
+
     X_filled  = X;
     n_features = size(X, 2);
 

@@ -152,13 +152,35 @@ function main_pipeline()
     logger('STEP 10: Feature Importance', 'INFO');
     logger(repmat('-', 1, 60), 'INFO');
 
+    % Ensure we have a valid best model index and selected features
+    best_model_idx = 1;
+    if isfield(ml_results, 'rmse') && ~isempty(ml_results.rmse)
+        [~, best_model_idx] = min(ml_results.rmse);
+    end
+    if isfield(ml_results, 'models') && ~isempty(ml_results.models)
+        best_model_idx = min(max(best_model_idx, 1), numel(ml_results.models));
+    else
+        best_model_idx = 0;
+    end
+
+    if isempty(selected_idx) || any(selected_idx < 1) || any(selected_idx > numel(engineered_names))
+        safe_selected_idx = 1:min(numel(engineered_names), size(X_engineered, 2));
+    else
+        safe_selected_idx = selected_idx;
+    end
+
     try
-        [best_model_idx, ~] = min([ml_results.rmse]);
-        [importance_fig, top_features] = plot_feature_importance( ...
-            ml_results.models{best_model_idx}, ...
-            ml_results.models{best_model_idx}, ...
-            engineered_names(selected_idx));
-        logger(sprintf('  Top feature: %s', top_features{1}), 'INFO');
+        if best_model_idx > 0
+            [importance_fig, top_features] = plot_feature_importance( ...
+                ml_results.model_objects{best_model_idx}, ...
+                ml_results.models{best_model_idx}, ...
+                engineered_names(safe_selected_idx));
+            if ~isempty(top_features)
+                logger(sprintf('  Top feature: %s', top_features{1}), 'INFO');
+            end
+        else
+            logger('  Skipping feature importance (no trained models available)', 'WARN');
+        end
     catch ME
         logger(sprintf('Feature importance plot failed: %s', ME.message), 'WARN');
     end
@@ -170,7 +192,7 @@ function main_pipeline()
     logger(repmat('-', 1, 60), 'INFO');
 
     if ~exist('outputs', 'dir'), mkdir('outputs'); end
-    export_cleaned_data(X_clean, X_engineered, X_selected, engineered_names(selected_idx), y, ml_results);
+    export_cleaned_data(X_clean, X_engineered, X_selected, engineered_names(safe_selected_idx), y, ml_results);
     logger('Results exported to outputs/ directory', 'INFO');
 
     % -------------------------------------------------------------------------
@@ -205,9 +227,15 @@ function main_pipeline()
     fprintf('%-25s %d\n',  'Original features:',  dataset_info.n_features);
     fprintf('%-25s %d\n',  'Engineered features:', size(X_engineered, 2));
     fprintf('%-25s %d\n',  'Selected features:',  size(X_selected, 2));
-    fprintf('%-25s %s\n',  'Best model:',          ml_results.models{best_model_idx});
+    if best_model_idx > 0 && best_model_idx <= numel(ml_results.models)
+        fprintf('%-25s %s\n',  'Best model:',          ml_results.models{best_model_idx});
     fprintf('%-25s %.4f\n','Best RMSE:',           ml_results.rmse(best_model_idx));
     fprintf('%-25s %.4f\n','Best R2:',             ml_results.rsquared(best_model_idx));
+    else
+        fprintf('%-25s %s\n', 'Best model:', 'N/A');
+        fprintf('%-25s %s\n', 'Best RMSE:',  'N/A');
+        fprintf('%-25s %s\n', 'Best R2:',    'N/A');
+    end
     fprintf('%s\n', repmat('-', 1, 50));
 
 end

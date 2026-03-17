@@ -10,6 +10,15 @@ function [best_model, best_params, tuning_history] = hyperparameter_tuning(X_tra
 
     logger(sprintf('Tuning hyperparameters for: %s', model_type), 'INFO');
 
+    % If bayesopt or required toolbox is not available, skip tuning and use defaults
+    if ~license('test', 'Statistics_Toolbox') || isempty(which('bayesopt'))
+        warning('Bayesian optimization requires the Statistics and Machine Learning Toolbox. Using default model parameters.');
+        [best_model, ~] = fit_default_model(model_type, X_train, y_train);
+        best_params    = struct();
+        tuning_history = [];
+        return;
+    end
+
     switch lower(model_type)
         case 'ridge'
             [best_model, best_params, tuning_history] = tune_ridge(X_train, y_train, cfg);
@@ -222,4 +231,28 @@ function rmse = cv_error_ensemble(X, y, num_cycles, learn_rate, folds)
         errs(f) = sqrt(mean((y(te) - predict(m, X(te,:))).^2));
     end
     rmse = mean(errs);
+end
+
+
+function [model, params] = fit_default_model(model_type, X, y)
+    % Default model fitting used when bayesopt is unavailable.
+    params = struct();
+
+    switch lower(model_type)
+        case 'ridge'
+            model = fitrlinear(X, y, 'Learner', 'leastsquares', 'Regularization', 'ridge', 'Lambda', 1);
+        case 'lasso'
+            [B, fitinfo] = lasso(X, y, 'Lambda', 0.01);
+            model = struct('B', B, 'Intercept', fitinfo.Intercept);
+        case 'svm'
+            model = fitrsvm(X, y, 'KernelFunction', 'gaussian', 'Standardize', true);
+        case 'tree'
+            model = fitrtree(X, y, 'MaxNumSplits', 20);
+        case 'randomforest'
+            model = TreeBagger(50, X, y, 'Method', 'regression', 'MinLeafSize', 5, 'OOBPrediction', 'on');
+        case 'ensemble'
+            model = fitrensemble(X, y, 'Method', 'LSBoost', 'NumLearningCycles', 30);
+        otherwise
+            error('Unknown model type: %s', model_type);
+    end
 end

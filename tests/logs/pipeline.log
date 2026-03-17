@@ -11,3 +11,57 @@
 [2026-03-16 00:18:07.104] [INFO ]   Training: Ridge
 [2026-03-16 00:18:07.588] [INFO ]   Training: Tree
 [2026-03-16 00:18:07.864] [INFO ]   Added 66 engineered features (69 total)
+[2026-03-17 08:09:26.055] [INFO ]   Outliers detected: 4 (3.88%) using consensus of 2 methods
+[2026-03-17 08:09:26.308] [INFO ] Performing feature selection: pca
+[2026-03-17 08:09:26.402] [INFO ]   Training: Linear
+[2026-03-17 08:09:26.486] [INFO ]   Added 66 engineered features (69 total)
+[2026-03-17 08:10:04.279] [INFO ]   Outliers detected: 4 (3.88%) using consensus of 2 methods
+[2026-03-17 08:10:04.307] [INFO ]   Outliers treated via winsorization (1st/99th percentile).
+[2026-03-17 08:10:04.337] [INFO ] Performing feature selection: pca
+[2026-03-17 08:10:11.936] [INFO ]   Training: Linear
+[2026-03-17 08:10:13.804] [INFO ]   Training: Ridge
+[2026-03-17 08:10:15.053] [INFO ]   Training: Tree
+[2026-03-17 08:10:15.424] [INFO ]   Added 66 engineered features (69 total)
+[2026-03-17 08:11:50.576] [INFO ]   Outliers detected: 4 (3.88%) using consensus of 2 methods
+[2026-03-17 08:11:50.595] [INFO ]   Outliers treated via winsorization (1st/99th percentile).
+[2026-03-17 08:11:50.628] [INFO ] Performing feature selection: pca
+[2026-03-17 08:11:52.882] [INFO ]   Training: Linear
+[2026-03-17 08:11:53.331] [INFO ]   Training: Ridge
+[2026-03-17 08:11:53.566] [INFO ]   Training: Tree
+[2026-03-17 08:11:53.707] [INFO ]   Added 66 engineered features (69 total)
+[2026-03-17 08:13:00.157] [INFO ]   Outliers detected: 4 (3.88%) using consensus of 2 methods
+[2026-03-17 08:13:00.166] [INFO ]   Outliers treated via winsorization (1st/99th percentile).
+[2026-03-17 08:13:00.192] [INFO ] Performing feature selection: pca
+[2026-03-17 08:13:09.266] [INFO ] Selected 10 of 10 features
+[2026-03-17 08:13:09.276] [INFO ] Performing feature selection: correlation
+[2026-03-17 08:13:09.349] [INFO ] Selected 2 of 10 features
+[2026-03-17 08:13:09.349] [INFO ] Performing feature selection: variance
+[2026-03-17 08:13:11.298] [INFO ] Selected 5 of 10 features
+[2026-03-17 08:13:11.315] [INFO ]   Training: Linear
+[2026-03-17 08:13:11.757] [INFO ]   Training: Ridge
+[2026-03-17 08:13:11.977] [INFO ]   Training: Tree
+[2026-03-17 08:13:12.110] [INFO ]   Added 66 engineered features (69 total)
+[2026-03-17 08:22:06.063] [INFO ]   Outliers detected: 4 (3.88%) using consensus of 2 methods
+[2026-03-17 08:22:06.086] [INFO ]   Outliers treated via winsorization (1st/99th percentile).
+[2026-03-17 08:22:06.110] [INFO ] Performing feature selection: pca
+[2026-03-17 08:22:12.248] [INFO ] Selected 10 of 10 features
+[2026-03-17 08:22:12.263] [INFO ] Performing feature selection: correlation
+[2026-03-17 08:22:12.297] [INFO ] Selected 2 of 10 features
+[2026-03-17 08:22:12.298] [INFO ] Performing feature selection: variance
+[2026-03-17 08:22:14.229] [INFO ] Selected 5 of 10 features
+[2026-03-17 08:22:14.247] [INFO ]   Training: Linear
+[2026-03-17 08:22:14.759] [INFO ]   Training: Ridge
+[2026-03-17 08:22:15.006] [INFO ]   Training: Tree
+[2026-03-17 08:22:15.160] [INFO ]   Added 66 engineered features (69 total)
+[2026-03-17 08:31:29.594] [INFO ]   Outliers detected: 4 (3.88%) using consensus of 2 methods
+[2026-03-17 08:31:29.610] [INFO ]   Outliers treated via winsorization (1st/99th percentile).
+[2026-03-17 08:31:29.633] [INFO ] Performing feature selection: pca
+[2026-03-17 08:31:35.864] [INFO ] Selected 10 of 10 features
+[2026-03-17 08:31:35.878] [INFO ] Performing feature selection: correlation
+[2026-03-17 08:31:35.913] [INFO ] Selected 2 of 10 features
+[2026-03-17 08:31:35.913] [INFO ] Performing feature selection: variance
+[2026-03-17 08:31:37.838] [INFO ] Selected 5 of 10 features
+[2026-03-17 08:31:37.856] [INFO ]   Training: Linear
+[2026-03-17 08:31:38.290] [INFO ]   Training: Ridge
+[2026-03-17 08:31:38.504] [INFO ]   Training: Tree
+[2026-03-17 08:31:38.631] [INFO ]   Added 66 engineered features (69 total)

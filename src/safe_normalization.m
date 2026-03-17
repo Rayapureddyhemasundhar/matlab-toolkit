@@ -20,6 +20,9 @@ function [scaled_data, scaler_params] = safe_normalization(data, method)
 
     logger(sprintf('Normalizing data using %s method', method), 'DEBUG');
 
+    % Replace infinite values with NaN so they are handled by omitnan options
+    data(~isfinite(data)) = NaN;
+
     scaled_data = zeros(size(data));
     scaler_params = struct();
 

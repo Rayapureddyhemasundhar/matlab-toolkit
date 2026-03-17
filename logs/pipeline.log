@@ -1,0 +1,245 @@
+[2026-03-17 08:14:20.529] [INFO ] ============================================================
+[2026-03-17 08:14:20.551] [INFO ] MATLAB DATA PREPROCESSING & ANALYSIS TOOLKIT
+[2026-03-17 08:14:20.553] [INFO ] ============================================================
+[2026-03-17 08:14:20.557] [INFO ] Pipeline started at 17-Mar-2026 08:14:20
+[2026-03-17 08:14:20.571] [INFO ] Configuration: dataset=air_quality, model=Linear
+[2026-03-17 08:14:20.576] [INFO ] STEP 1: Loading Dataset
+[2026-03-17 08:14:20.577] [INFO ] ------------------------------------------------------------
+[2026-03-17 08:14:20.600] [INFO ] Loading dataset: air_quality
+[2026-03-17 08:14:20.601] [INFO ] Air Quality dataset not found, attempting download...
+[2026-03-17 08:14:24.434] [WARN ] Download failed: Unable to open output file: 'data/air_quality.zip' for writing. Common reasons include that the file exists and does not have write permission or the folder does not have write permissions.
+[2026-03-17 08:14:24.448] [WARN ] Download failed. Generating realistic synthetic air quality data.
+[2026-03-17 08:14:24.498] [INFO ] Dataset loaded: Air Quality (Synthetic)
+[2026-03-17 08:14:24.498] [INFO ]   Samples:      9358
+[2026-03-17 08:14:24.498] [INFO ]   Features:     12
+[2026-03-17 08:14:24.498] [INFO ]   Missing rate: 0.00%
+[2026-03-17 08:14:24.498] [INFO ] STEP 2: Missing Value Treatment
+[2026-03-17 08:14:24.498] [INFO ] ------------------------------------------------------------
+[2026-03-17 08:14:24.498] [INFO ]   No missing values found.
+[2026-03-17 08:14:24.498] [INFO ] Missing values handled in 0.01 seconds
+[2026-03-17 08:14:24.498] [INFO ]   Best method: none
+[2026-03-17 08:14:24.498] [INFO ] STEP 3: Outlier Detection
+[2026-03-17 08:14:24.498] [INFO ] ------------------------------------------------------------
+[2026-03-17 08:14:27.677] [INFO ]   Outliers detected: 848 (9.06%) using consensus of 2 methods
+[2026-03-17 08:14:27.690] [INFO ]   Outliers treated via winsorization (1st/99th percentile).
+[2026-03-17 08:14:27.691] [INFO ] Outliers detected in 3.18 seconds
+[2026-03-17 08:14:27.691] [INFO ]   Outliers found: 848 (9.06%)
+[2026-03-17 08:14:27.691] [INFO ] STEP 4: Feature Scaling
+[2026-03-17 08:14:27.692] [INFO ] ------------------------------------------------------------
+[2026-03-17 08:14:27.703] [INFO ] Features normalized in 0.01 seconds
+[2026-03-17 08:14:27.703] [INFO ]   Method: StandardScaler
+[2026-03-17 08:14:27.704] [INFO ] STEP 5: Feature Engineering
+[2026-03-17 08:14:27.704] [INFO ] ------------------------------------------------------------
+[2026-03-17 08:14:27.797] [INFO ]   Added 260 engineered features (272 total)
+[2026-03-17 08:14:27.797] [INFO ] Features engineered in 0.10 seconds
+[2026-03-17 08:14:27.797] [INFO ]   Original features:   12
+[2026-03-17 08:14:27.797] [INFO ]   Engineered features: 272
+[2026-03-17 08:14:27.797] [INFO ] STEP 6: Feature Selection
+[2026-03-17 08:14:27.797] [INFO ] ------------------------------------------------------------
+[2026-03-17 08:14:27.818] [INFO ] Performing feature selection: pca
+[2026-03-17 08:14:34.184] [INFO ] Selected 6 of 272 features
+[2026-03-17 08:14:34.190] [INFO ] Features selected in 6.38 seconds
+[2026-03-17 08:14:34.190] [INFO ]   Selected features: 6
+[2026-03-17 08:14:34.191] [INFO ] STEP 7: Train/Test Split
+[2026-03-17 08:14:34.191] [INFO ] ------------------------------------------------------------
+[2026-03-17 08:14:34.196] [INFO ]   Training samples: 7486
+[2026-03-17 08:14:34.196] [INFO ]   Test samples:     1872
+[2026-03-17 08:14:34.197] [INFO ] STEP 8: Model Training
+[2026-03-17 08:14:34.197] [INFO ] ------------------------------------------------------------
+[2026-03-17 08:14:34.198] [INFO ]   Training: Linear
+[2026-03-17 08:14:34.655] [INFO ]   Training: Ridge
+[2026-03-17 08:14:34.906] [INFO ]   Training: Lasso
+[2026-03-17 08:14:34.949] [INFO ]   Training: Tree
+[2026-03-17 08:14:35.071] [INFO ]   Training: RandomForest
+[2026-03-17 08:14:36.614] [INFO ]   Training: SVM
+[2026-03-17 08:14:37.839] [INFO ]   Training: Ensemble
+[2026-03-17 08:14:38.819] [INFO ] Models trained in 4.62 seconds
+[2026-03-17 08:14:38.822] [INFO ] STEP 9: Hyperparameter Tuning
+[2026-03-17 08:14:38.822] [INFO ] ------------------------------------------------------------
+[2026-03-17 08:14:38.851] [INFO ] Tuning hyperparameters for: RandomForest
+[2026-03-17 08:17:24.420] [INFO ] Tuning complete for RandomForest.
+[2026-03-17 08:17:24.427] [INFO ] Hyperparameters tuned in 165.60 seconds
+[2026-03-17 08:17:24.527] [INFO ]   Tuned model RMSE: 8.2693
+[2026-03-17 08:17:24.528] [INFO ] STEP 10: Feature Importance
+[2026-03-17 08:17:24.528] [INFO ] ------------------------------------------------------------
+[2026-03-17 08:17:24.534] [WARN ] Feature importance plot failed: Undefined function 'plot_feature_importance' for input arguments of type 'cell'.
+[2026-03-17 08:17:24.534] [INFO ] STEP 11: Exporting Results
+[2026-03-17 08:17:24.534] [INFO ] ------------------------------------------------------------
+[2026-03-17 08:17:25.125] [INFO ]   Cleaned data   -> outputs/cleaned_data.csv
+[2026-03-17 08:17:26.378] [INFO ]   Engineered features -> outputs/engineered_features.csv
+[2026-03-17 08:17:26.427] [INFO ]   Selected features  -> outputs/selected_features.csv
+[2026-03-17 08:17:26.449] [INFO ]   Model comparison   -> outputs/model_comparison.csv
+[2026-03-17 08:17:26.813] [INFO ]   Workspace          -> outputs/pipeline_results.mat
+[2026-03-17 08:17:26.829] [INFO ] Results exported to outputs/ directory
+[2026-03-17 08:17:26.829] [INFO ] STEP 12: Generating Report
+[2026-03-17 08:17:26.829] [INFO ] ------------------------------------------------------------
+[2026-03-17 08:18:32.463] [INFO ] ============================================================
+[2026-03-17 08:18:32.491] [INFO ] MATLAB DATA PREPROCESSING & ANALYSIS TOOLKIT
+[2026-03-17 08:18:32.493] [INFO ] ============================================================
+[2026-03-17 08:18:32.496] [INFO ] Pipeline started at 17-Mar-2026 08:18:32
+[2026-03-17 08:18:32.508] [INFO ] Configuration: dataset=air_quality, model=Linear
+[2026-03-17 08:18:32.511] [INFO ] STEP 1: Loading Dataset
+[2026-03-17 08:18:32.512] [INFO ] ------------------------------------------------------------
+[2026-03-17 08:18:32.521] [INFO ] Loading dataset: air_quality
+[2026-03-17 08:18:32.523] [INFO ] Air Quality dataset not found, attempting download...
+[2026-03-17 08:18:34.200] [WARN ] Download failed: Unable to open output file: 'data/air_quality.zip' for writing. Common reasons include that the file exists and does not have write permission or the folder does not have write permissions.
+[2026-03-17 08:18:34.209] [WARN ] Download failed. Generating realistic synthetic air quality data.
+[2026-03-17 08:18:34.253] [INFO ] Dataset loaded: Air Quality (Synthetic)
+[2026-03-17 08:18:34.253] [INFO ]   Samples:      9358
+[2026-03-17 08:18:34.253] [INFO ]   Features:     12
+[2026-03-17 08:18:34.254] [INFO ]   Missing rate: 0.00%
+[2026-03-17 08:18:34.254] [INFO ] STEP 2: Missing Value Treatment
+[2026-03-17 08:18:34.254] [INFO ] ------------------------------------------------------------
+[2026-03-17 08:18:34.256] [INFO ]   No missing values found.
+[2026-03-17 08:18:34.256] [INFO ] Missing values handled in 0.01 seconds
+[2026-03-17 08:18:34.256] [INFO ]   Best method: none
+[2026-03-17 08:18:34.256] [INFO ] STEP 3: Outlier Detection
+[2026-03-17 08:18:34.256] [INFO ] ------------------------------------------------------------
+[2026-03-17 08:18:37.261] [INFO ]   Outliers detected: 848 (9.06%) using consensus of 2 methods
+[2026-03-17 08:18:37.277] [INFO ]   Outliers treated via winsorization (1st/99th percentile).
+[2026-03-17 08:18:37.278] [INFO ] Outliers detected in 3.02 seconds
+[2026-03-17 08:18:37.278] [INFO ]   Outliers found: 848 (9.06%)
+[2026-03-17 08:18:37.278] [INFO ] STEP 4: Feature Scaling
+[2026-03-17 08:18:37.278] [INFO ] ------------------------------------------------------------
+[2026-03-17 08:18:37.285] [INFO ] Features normalized in 0.01 seconds
+[2026-03-17 08:18:37.286] [INFO ]   Method: StandardScaler
+[2026-03-17 08:18:37.286] [INFO ] STEP 5: Feature Engineering
+[2026-03-17 08:18:37.286] [INFO ] ------------------------------------------------------------
+[2026-03-17 08:18:37.388] [INFO ]   Added 260 engineered features (272 total)
+[2026-03-17 08:18:37.389] [INFO ] Features engineered in 0.10 seconds
+[2026-03-17 08:18:37.389] [INFO ]   Original features:   12
+[2026-03-17 08:18:37.389] [INFO ]   Engineered features: 272
+[2026-03-17 08:18:37.389] [INFO ] STEP 6: Feature Selection
+[2026-03-17 08:18:37.390] [INFO ] ------------------------------------------------------------
+[2026-03-17 08:18:37.400] [INFO ] Performing feature selection: pca
+[2026-03-17 08:18:43.500] [INFO ] Selected 6 of 272 features
+[2026-03-17 08:18:43.513] [INFO ] Features selected in 6.12 seconds
+[2026-03-17 08:18:43.514] [INFO ]   Selected features: 6
+[2026-03-17 08:18:43.514] [INFO ] STEP 7: Train/Test Split
+[2026-03-17 08:18:43.515] [INFO ] ------------------------------------------------------------
+[2026-03-17 08:18:43.519] [INFO ]   Training samples: 7486
+[2026-03-17 08:18:43.519] [INFO ]   Test samples:     1872
+[2026-03-17 08:18:43.519] [INFO ] STEP 8: Model Training
+[2026-03-17 08:18:43.519] [INFO ] ------------------------------------------------------------
+[2026-03-17 08:18:43.535] [INFO ]   Training: Linear
+[2026-03-17 08:18:44.046] [INFO ]   Training: Ridge
+[2026-03-17 08:18:44.307] [INFO ]   Training: Lasso
+[2026-03-17 08:18:44.347] [INFO ]   Training: Tree
+[2026-03-17 08:18:44.480] [INFO ]   Training: RandomForest
+[2026-03-17 08:18:45.629] [INFO ]   Training: SVM
+[2026-03-17 08:18:46.522] [INFO ]   Training: Ensemble
+[2026-03-17 08:18:46.968] [INFO ] Models trained in 3.44 seconds
+[2026-03-17 08:18:46.970] [INFO ] STEP 9: Hyperparameter Tuning
+[2026-03-17 08:18:46.972] [INFO ] ------------------------------------------------------------
+[2026-03-17 08:18:46.979] [INFO ] Tuning hyperparameters for: RandomForest
+[2026-03-17 08:20:59.236] [INFO ] Tuning complete for RandomForest.
+[2026-03-17 08:20:59.242] [INFO ] Hyperparameters tuned in 132.27 seconds
+[2026-03-17 08:20:59.294] [INFO ]   Tuned model RMSE: 8.2743
+[2026-03-17 08:20:59.294] [INFO ] STEP 10: Feature Importance
+[2026-03-17 08:20:59.294] [INFO ] ------------------------------------------------------------
+[2026-03-17 08:20:59.294] [WARN ] Feature importance plot failed: Undefined function 'plot_feature_importance' for input arguments of type 'struct'.
+[2026-03-17 08:20:59.294] [INFO ] STEP 11: Exporting Results
+[2026-03-17 08:20:59.294] [INFO ] ------------------------------------------------------------
+[2026-03-17 08:20:59.515] [INFO ]   Cleaned data   -> outputs/cleaned_data.csv
+[2026-03-17 08:21:00.754] [INFO ]   Engineered features -> outputs/engineered_features.csv
+[2026-03-17 08:21:00.801] [INFO ]   Selected features  -> outputs/selected_features.csv
+[2026-03-17 08:21:00.838] [INFO ]   Model comparison   -> outputs/model_comparison.csv
+[2026-03-17 08:21:01.841] [INFO ]   Workspace          -> outputs/pipeline_results.mat
+[2026-03-17 08:21:01.842] [INFO ] Results exported to outputs/ directory
+[2026-03-17 08:21:01.843] [INFO ] STEP 12: Generating Report
+[2026-03-17 08:21:01.843] [INFO ] ------------------------------------------------------------
+[2026-03-17 08:25:02.119] [INFO ] Loading dataset: synthetic
+[2026-03-17 08:25:02.136] [WARN ] Dataset "synthetic" not found. Generating synthetic data.
+[2026-03-17 08:25:02.207] [INFO ]   Found 250 missing values (5.00%)
+[2026-03-17 08:25:02.407] [INFO ]   Best imputation method: mean (RMSE = 0.9751)
+[2026-03-17 08:25:03.456] [INFO ]   Outliers detected: 36 (3.60%) using consensus of 2 methods
+[2026-03-17 08:25:03.483] [INFO ]   Outliers treated via winsorization (1st/99th percentile).
+[2026-03-17 08:25:03.503] [INFO ] Performing feature selection: pca
+[2026-03-17 08:25:09.351] [INFO ] Selected 5 of 5 features
+[2026-03-17 08:25:09.377] [INFO ]   Training: Linear
+[2026-03-17 08:25:09.874] [INFO ]   Training: Ridge
+[2026-03-17 08:25:10.108] [INFO ]   Training: Lasso
+[2026-03-17 08:25:10.140] [INFO ]   Training: Tree
+[2026-03-17 08:25:10.245] [INFO ]   Training: RandomForest
+[2026-03-17 08:25:10.536] [INFO ]   Training: SVM
+[2026-03-17 08:25:10.656] [INFO ]   Training: Ensemble
+[2026-03-17 08:25:11.180] [INFO ]   Cleaned data   -> outputs/cleaned_data.csv
+[2026-03-17 08:25:11.242] [INFO ]   Engineered features -> outputs/engineered_features.csv
+[2026-03-17 08:25:11.260] [INFO ]   Selected features  -> outputs/selected_features.csv
+[2026-03-17 08:25:11.300] [INFO ]   Model comparison   -> outputs/model_comparison.csv
+[2026-03-17 08:25:11.442] [INFO ]   Workspace          -> outputs/pipeline_results.mat
+[2026-03-17 08:25:51.414] [INFO ] ============================================================
+[2026-03-17 08:25:51.425] [INFO ] MATLAB DATA PREPROCESSING & ANALYSIS TOOLKIT
+[2026-03-17 08:25:51.425] [INFO ] ============================================================
+[2026-03-17 08:25:51.441] [INFO ] Pipeline started at 17-Mar-2026 08:25:51
+[2026-03-17 08:25:51.451] [INFO ] Configuration: dataset=air_quality, model=Linear
+[2026-03-17 08:25:51.455] [INFO ] STEP 1: Loading Dataset
+[2026-03-17 08:25:51.455] [INFO ] ------------------------------------------------------------
+[2026-03-17 08:25:51.464] [INFO ] Loading dataset: air_quality
+[2026-03-17 08:25:51.465] [INFO ] Air Quality dataset not found, attempting download...
+[2026-03-17 08:25:52.774] [WARN ] Download failed: Unable to open output file: 'data/air_quality.zip' for writing. Common reasons include that the file exists and does not have write permission or the folder does not have write permissions.
+[2026-03-17 08:25:52.782] [WARN ] Download failed. Generating realistic synthetic air quality data.
+[2026-03-17 08:25:52.824] [INFO ] Dataset loaded: Air Quality (Synthetic)
+[2026-03-17 08:25:52.824] [INFO ]   Samples:      9358
+[2026-03-17 08:25:52.824] [INFO ]   Features:     12
+[2026-03-17 08:25:52.824] [INFO ]   Missing rate: 0.00%
+[2026-03-17 08:25:52.824] [INFO ] STEP 2: Missing Value Treatment
+[2026-03-17 08:25:52.824] [INFO ] ------------------------------------------------------------
+[2026-03-17 08:25:52.824] [INFO ]   No missing values found.
+[2026-03-17 08:25:52.824] [INFO ] Missing values handled in 0.00 seconds
+[2026-03-17 08:25:52.824] [INFO ]   Best method: none
+[2026-03-17 08:25:52.824] [INFO ] STEP 3: Outlier Detection
+[2026-03-17 08:25:52.824] [INFO ] ------------------------------------------------------------
+[2026-03-17 08:25:55.721] [INFO ]   Outliers detected: 848 (9.06%) using consensus of 2 methods
+[2026-03-17 08:25:55.732] [INFO ]   Outliers treated via winsorization (1st/99th percentile).
+[2026-03-17 08:25:55.733] [INFO ] Outliers detected in 2.90 seconds
+[2026-03-17 08:25:55.733] [INFO ]   Outliers found: 848 (9.06%)
+[2026-03-17 08:25:55.733] [INFO ] STEP 4: Feature Scaling
+[2026-03-17 08:25:55.734] [INFO ] ------------------------------------------------------------
+[2026-03-17 08:25:55.742] [INFO ] Features normalized in 0.01 seconds
+[2026-03-17 08:25:55.742] [INFO ]   Method: StandardScaler
+[2026-03-17 08:25:55.742] [INFO ] STEP 5: Feature Engineering
+[2026-03-17 08:25:55.743] [INFO ] ------------------------------------------------------------
+[2026-03-17 08:25:55.870] [INFO ]   Added 260 engineered features (272 total)
+[2026-03-17 08:25:55.871] [INFO ] Features engineered in 0.13 seconds
+[2026-03-17 08:25:55.871] [INFO ]   Original features:   12
+[2026-03-17 08:25:55.871] [INFO ]   Engineered features: 272
+[2026-03-17 08:25:55.872] [INFO ] STEP 6: Feature Selection
+[2026-03-17 08:25:55.872] [INFO ] ------------------------------------------------------------
+[2026-03-17 08:25:55.882] [INFO ] Performing feature selection: pca
+[2026-03-17 08:26:01.981] [INFO ] Selected 6 of 272 features
+[2026-03-17 08:26:01.993] [INFO ] Features selected in 6.12 seconds
+[2026-03-17 08:26:01.993] [INFO ]   Selected features: 6
+[2026-03-17 08:26:01.993] [INFO ] STEP 7: Train/Test Split
+[2026-03-17 08:26:01.994] [INFO ] ------------------------------------------------------------
+[2026-03-17 08:26:02.000] [INFO ]   Training samples: 7486
+[2026-03-17 08:26:02.000] [INFO ]   Test samples:     1872
+[2026-03-17 08:26:02.000] [INFO ] STEP 8: Model Training
+[2026-03-17 08:26:02.000] [INFO ] ------------------------------------------------------------
+[2026-03-17 08:26:02.014] [INFO ]   Training: Linear
+[2026-03-17 08:26:02.474] [INFO ]   Training: Ridge
+[2026-03-17 08:26:02.712] [INFO ]   Training: Lasso
+[2026-03-17 08:26:02.736] [INFO ]   Training: Tree
+[2026-03-17 08:26:02.852] [INFO ]   Training: RandomForest
+[2026-03-17 08:26:04.018] [INFO ]   Training: SVM
+[2026-03-17 08:26:04.990] [INFO ]   Training: Ensemble
+[2026-03-17 08:26:05.442] [INFO ] Models trained in 3.44 seconds
+[2026-03-17 08:26:05.445] [INFO ] STEP 9: Hyperparameter Tuning
+[2026-03-17 08:26:05.446] [INFO ] ------------------------------------------------------------
+[2026-03-17 08:26:05.451] [INFO ] Tuning hyperparameters for: RandomForest
+[2026-03-17 08:28:36.187] [INFO ] Tuning complete for RandomForest.
+[2026-03-17 08:28:36.193] [INFO ] Hyperparameters tuned in 150.75 seconds
+[2026-03-17 08:28:36.269] [INFO ]   Tuned model RMSE: 8.2706
+[2026-03-17 08:28:36.270] [INFO ] STEP 10: Feature Importance
+[2026-03-17 08:28:36.270] [INFO ] ------------------------------------------------------------
+[2026-03-17 08:28:36.272] [WARN ] Feature importance plot failed: Undefined function 'plot_feature_importance' for input arguments of type 'struct'.
+[2026-03-17 08:28:36.273] [INFO ] STEP 11: Exporting Results
+[2026-03-17 08:28:36.273] [INFO ] ------------------------------------------------------------
+[2026-03-17 08:28:36.486] [INFO ]   Cleaned data   -> outputs/cleaned_data.csv
+[2026-03-17 08:28:37.688] [INFO ]   Engineered features -> outputs/engineered_features.csv
+[2026-03-17 08:28:37.751] [INFO ]   Selected features  -> outputs/selected_features.csv
+[2026-03-17 08:28:37.782] [INFO ]   Model comparison   -> outputs/model_comparison.csv
+[2026-03-17 08:28:38.730] [INFO ]   Workspace          -> outputs/pipeline_results.mat
+[2026-03-17 08:28:38.731] [INFO ] Results exported to outputs/ directory
+[2026-03-17 08:28:38.731] [INFO ] STEP 12: Generating Report
+[2026-03-17 08:28:38.731] [INFO ] ------------------------------------------------------------
